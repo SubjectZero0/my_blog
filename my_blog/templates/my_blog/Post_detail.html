@@ -1,0 +1,100 @@
+{% extends 'my_blog/home.html' %}
+{% load static %}
+
+{% block title %}
+    <title>{{post.post_title}}</title>
+{% endblock %}
+
+{% block content %}
+<!-- start header -->
+<div class="container-fluid text-light" id="PostHeading">
+    <h1>{{post.post_title}}:</h1>
+    <p class="mx-4">A review by {{post.author_f_name}} {{post.author_l_name}}</p>
+    <hr>
+</div>
+<!-- end header -->
+
+
+<!-- start post content -->
+<div class="container text-light ms-1">
+    {{post.post_main|safe}} <!--ALWAYS USE FULL LOWERCASE FOR THE MODEL///USE |safe to display html formatting in the post -->
+ 
+<!-- end post content -->
+
+
+<!-- begin author card -->
+    <h4 class="mx-1 mt-5"><em>About the Author:</em> </h3>
+    <div id="AuthorCard" class="card mb-3 mt-3 bg-dark" style="max-width: 540px;">
+        
+        <div class="row g-0">
+            <div class="col-4 col-md-4">
+                <img src="{% static '/my_blog/images/blank_profile.jpg' %}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class=" col-8 col-md-8 text-light bg-dark">
+                <div class="card-body">
+                    <h5 class="card-title">{{post.author_f_name}} {{post.author_l_name}}</h5>
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                    <p class="card-text"><small class="text-muted">Author's social media here as a link</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end author card -->
+
+
+<!-- start comment section -->
+<div class="container-fluid text-light m-2 p-2">
+    <hr>
+    <h3 class="mx-1 mb-3"><u>Comments...</u></h3>
+    <!-- comment section should be scrollable separately with overflow-auto and specified height-->
+    <div class="col-10 col-sm-10 col-md-8 col-lg-6 col-xl-6 overflow-auto border border-dark border-2" style="height: 25rem;">
+        <section style="background-color: #504753;">
+        {% for comment in post.comments.all %}
+            {% if comment.approved_comment == True %}
+            
+                <!--start comment card -->
+                <div class="row d-flex justify-content-start">
+                    <div class="col-12 mb-2 shadow-lg shadow-intensity-lg shadow-danger">
+                        <div class="card m-2 border border-rounded border-secondary">
+                            <div class="card-body bg-dark">
+                                <h6 class="text-success mb-1">
+                                    <strong>{{comment.comment_title}}</strong> by <em>{{comment.nickname}}</em>
+                                </h6>
+                                <p class="text-muted small mb-0">
+                                    Shared - {{comment.create_date}}
+                                </p>
+                                <p class="mt-3 mb-2 pb-2">
+                                    {{comment.comment_content}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end comment card -->
+
+            {% endif %}
+        {% endfor %} 
+    </div>
+    <hr>
+</div>
+<!-- end comment section -->
+
+<div class="container m-2">
+    <h4 class="mx-2 mb-4 text-light"><u><em>Leave your comment...</em></u></h4>
+    <div class="col-10 col-sm-10 col-md-8 col-lg-6 col-xl-6 ">
+            <form method="post">
+                {% csrf_token %}
+                {% for field in comment_form %}
+                <div class="form-floating m-2">
+                    {{field}}
+                    {{field.label_tag}}
+                </div>
+                {% endfor %}
+               
+                <input type="submit" class="btn btn-success m-2 justify-content-center" value="Submit Comment">
+            </form>
+    </div>
+</div>
+><button onclick="topFunction()" class="btn btn-xs btn-success" id="myBtn" title="Go to top"><img src="{% static '\my_blog\images\up_arrow.png' %}"></button> 
+{% endblock %}

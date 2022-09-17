@@ -1,0 +1,71 @@
+<!--
+CHECK FOR ERRORS
+
+CHECK IF USER IS AUTHENTICATED
+
+IF NOT
+    LOGIN
+-->
+
+
+{% if form.errors %}
+    <p> Your Username and/or Password are incorrect. Please enter the correct Username and/or Password </p>
+{% endif %}
+
+{% if next %}
+
+    {% if user.is_authenticated %}
+
+        
+
+        <p> You are already logged in </p>
+
+
+    {% else %}
+
+          <!--User logged in but no access
+            user not logged in 
+            form -->
+
+        
+
+        {% if user.is_authenticated %}
+                <p>You don't have access the contents of this page</p>
+            {% else %}
+                <p>Please login to see drafts, or create a post</p>
+                
+        {% endif %}
+
+    {% endif %}
+{% endif %}
+
+<form method='post' action="{% url 'login' %}">
+    {% csrf_token %}
+
+    {{form.username.label_tag}} {{form.username}}
+    {{form.password.label_tag}} {{form.password}}
+
+
+    <input type="submit" value="Login">
+    <input type="hidden" name="next">
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,14 @@
+{% extends 'my_blog/home.html' %}
+
+{% block title %}
+<title>Delete Post</title>
+{% endblock %}
+
+{% block content %}
+<h4 class="text-light">Are you sure you want to delete the post titled "<em>{{post.post_title}}</em>" ?</h4>
+<form method="post" action="">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-lg btn-success" value="Confirm Delete">
+</form>
+<a href="{% url 'my_blog:post_list' %}" class="btn btn-lg btn-success">Go back</a>
+{% endblock %}

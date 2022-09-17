@@ -1,0 +1,15 @@
+<div id="sub" class="container col-sm-10 col-md-8 ">
+  <form  method="post" action="">
+      {% csrf_token %}    
+      {% for field in subscriber_form %}
+
+        <div class="form-floating mb-3 mt-1 text-dark">
+          {{field}}
+          {{field.label_tag}}
+        </div>
+
+      {% endfor %}
+
+    <button class="btn btn-outline-success" type="submit">Subscribe!</button>
+  </form> 
+</div>

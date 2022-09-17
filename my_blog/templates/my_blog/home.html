@@ -1,0 +1,158 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'my_blog/home.css' %}">
+
+    {% block title %}
+      <title>Homepage</title>
+    {% endblock %}
+
+
+</head>
+<body>
+    
+  <!-- begin navbar -->
+
+    <nav class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'my_blog:home' %}">My Blog</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+              {% if user.is_authenticated %}
+                <span class = navbar-brand nav-item >Welcome {{user}}!</span>
+              {% endif %}
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+              
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'my_blog:home' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                {% if user.is_authenticated %}
+                  <a class="nav-link active" href="{% url 'logout' %}?next={{request.path}}">Logout</a>
+                {% else %}
+                  <a class="nav-link active" href="{% url 'login' %}">Login</a>
+                {% endif %}
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Posts
+                </a>
+                
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="{% url 'my_blog:post_list' %}">View Published Posts</a></li>
+                  <li><a class="dropdown-item" href="{% url 'my_blog:draft_list' %}">View Drafts</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'my_blog:create_post' %}">Create Post</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'emails:contact_page' %}">Contact</a>
+              </li>
+            </ul>
+            
+            <form class="d-flex justify-content-evenly" method = 'get' action = "{% url 'my_blog:search_results' %}">
+              <input class="form-control me-2" name = 'q' type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+  <!-- end navbar -->
+
+
+
+
+<!-- begin main page content -->
+{% block content %}
+<div class = 'container-fluid text-center text-white mb-3 mt-3'>
+  <h1>Welcome to the world of pipe smoking</h1>
+</div>
+
+<div class = 'container'>
+
+
+  <div class = 'row'>
+
+    <div class = 'col'>
+      <img src="{% static '/my_blog/images/landing.jpg' %}" class="img-fluid" alt="...">
+    </div>
+  </div>
+
+  <div class = 'row text-center text-white mb-3 mt-3'>
+
+    <div class = 'col'>
+      <h3>Join us on this sensational journey of aromas</h3>
+    </div>
+    
+  </div>
+
+
+  <div class = 'row align-items-center justify-content-center'>
+
+    <div class = 'col'><img src="{% static '/my_blog/images/im1.jpg' %}" class="img-fluid" alt=""></div>
+    <div class = 'col'><img src="{% static '/my_blog/images/im2.jpg' %}" class="img-fluid" alt=""></div>
+    <div class = 'col'><img src="{% static '/my_blog/images/im3.jpg' %}" class="img-fluid" alt=""></div>
+  </div>
+  
+</div>
+
+
+<div class="container mb-3 mt-3">
+  <div class = 'row'>
+    <h3 class="text-light text-center">If you want to know more, visit our <a href="{% url 'my_blog:post_list' %}"><u>post section</u></a> for reviews!</h3>
+  </div>
+</div>
+<!-- end main page content -->
+
+<!-- begin Subscribe and contact content -->
+  <div class="container mb-4 text-light">
+    <div class="row border-top border-bottom border-2 border-secondary">
+      <div class="col text-center mt-2">
+        <div class="row">
+          <h4>Whether you're a connoiseur, or just starting your journey:</h4>
+        </div>
+        <div class="row">
+          <h5>Subscribe to be the first to know where the journey will take us.</h5>
+        </div>
+        <div class="row">
+          {% include 'emails/subscriber_form.html' %}
+        </div>
+      </div>
+
+      <div class="col text-center mt-2">
+        <div class="row">
+          <h4>Do you have any suggestions and/or feedback?</h4>
+        </div>
+        <div class="row">
+          <h5>We would love to hear from you!</h5>
+        </div>
+        <div class="row text-center mt-5">
+          <div id="contact_btn" class="container">
+            <a class="btn btn-lg btn-success" href="{% url 'emails:contact_page' %}"> Contact Us! </a>
+          </div>
+          <p class="mt-5"><em>We will get back to you as soon as we can.</em></p>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+<!-- end subscribe and contact content -->
+{% endblock %}
+<script src="{% static '/my_blog/extra.js' %}"></script>
+
+
+</body>
+
+</html>
+
+
+

@@ -1,0 +1,12 @@
+
+
+<h1>Search Results for "{{query}}"</h1>
+<ul>
+    {% for post  in object_list %}
+        <li>{{post.post_title}} by {{post.author_l_name}} {{post.author_f_name}}</li>
+
+
+
+    {% endfor %}
+
+</ul>

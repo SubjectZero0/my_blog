@@ -1,0 +1,7 @@
+<form method="post" action="">
+    {% csrf_token %}
+    {{comment_form.as_p}}
+    <input type="submit" value="Submit Comment">
+</form>
+
+<!-- possible not needed. CHECK  -->

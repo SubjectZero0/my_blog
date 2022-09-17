@@ -1,0 +1,33 @@
+{% extends "my_blog/home.html" %}
+
+{% block title %}
+    <title>Create Post</title>
+{% endblock %}
+
+{% block content %}
+<div class="container" id="post_container">
+    <form id="postform" method="post" action="" enctype="multipart/form-data"> <!--enctype="multipart/form-data" is used for making the form POST the IMAGE-type thumbnails-->
+
+        {% csrf_token %}
+       
+            {% for field in form %}
+
+                {% if field.name == 'draft' or field.name == 'post_image' %}
+                <div class="form-check col-md-10 col-lg-10 mb-3 ps-0 text-light">
+                    {{field.label_tag}}
+                    {{field}}
+                </div>                
+                {% else %}
+                <div class="col-md-10 col-lg-10 form-floating mb-3">
+                    {{form.media}}<!--make use of ckeditor for rich text field-->
+                    {{field}}
+                    {{field.label_tag}}
+                </div>
+                {% endif %}
+            {% endfor %}
+            
+        <input type="submit" class="btn btn-lg btn-success" value="Create Post!">
+    </form>
+</div>
+
+{% endblock %}
