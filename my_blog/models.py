@@ -1,9 +1,7 @@
-from tkinter import Widget
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 from ckeditor.fields import RichTextField
-from PIL import Image
 
 # Create your models here.
 
