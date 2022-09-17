@@ -16,66 +16,34 @@
 
 </div>
 <div class="container mt-3 m-auto text-center">
-    <!--this loop will automatically render new posts in the list. the idea is to style the post cards depending if its the 1st, 2nd, 3rd post etc.
-
-    if the post's "index" is odd, the card will render on the left, with the image on the left
-    if the post's "index" is even, the card will render on the right, with image on the right
+    <!--this loop will automatically render new posts in the list in cards.
 
     This template also utilizes the image the user provides in the creation (or update), and automatically provides the card image(thumbnail)
 
     RISK----if user doesnt provide image, there will be an error when trying to render the template
-    POSSIBLE FIX-----  Make image input be demanded on creation, or provide an alternative image for missing images-->
+    POSSIBLE FIX-----  Make image input be demanded on creation and update-->
 
     {% for post in post_list %}
-
-
-        {% if forloop.counter|divisibleby:2 %} <!--check for odd or even-->
-            <div class="d-flex flex-column align-items-center">
-                <div class="card mb-5 bg-dark text-light border" style="max-width: 85%;">
-                    <div class="row g-0">
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title text-success fw-bold">{{post.post_title}}</h5>
-                                <p class="card-text">{{post.post_main|slice:':300'}} ... <a href="/post_detail/{{post.id}}">Read more</a></p>
-                                <p class="card-text"><small class="text-success">by {{post.author_f_name}} {{post.author_l_name}}</small></p>
-                                {% if user.is_authenticated %}
-                                        <a href="/update_post/{{post.id}}" class="btn btn-sm btn-success">Update</a>
-                                        <a href="/delete_post/{{post.id}}" class="btn btn-sm btn-success">Delete</a>
-                                {% endif %}
-                       
-                            </div>
-                        </div>
-                        <div class="col-md-4 text-center">
-                            <img src="{{post.post_image.url}}" class="img-fluid rounded-end" alt="..."> <!--utilize the url set up in urls.py, settings.py and models.py to render image thumbnail in card-->
-                            
-                        </div>
-                    
+        <div class="d-flex flex-column align-items-center">
+            <div class="card mb-5 bg-dark text-light border" style="max-width: 85%;" >
+                <div class="row g-0">
+                    <div class="col-md-4 text-center">
+                        <img src="{{post.post_image.url}}" class="img-fluid rounded-start" alt="...">
                     </div>
-                </div>
-            </div>
-        {% else %}
-            <div class="d-flex flex-column align-items-center">
-                <div class="card mb-5 bg-dark text-light border" style="max-width: 85%;" >
-                    <div class="row g-0">
-                        <div class="col-md-4 text-center">
-                            <img src="{{post.post_image.url}}" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title text-success fw-bold">{{post.post_title}}</h5>
-                                <p class="card-text">{{post.post_main|slice:':300'|safe}}... <a href="/post_detail/{{post.id}}">Read more</a></p>
-                                <p class="card-text"><small class="text-success">by {{post.author_f_name}} {{post.author_l_name}}</small></p>
-                                {% if user.is_authenticated %}
-                                    <a href="/update_post/{{post.id}}" class="btn btn-sm btn-success">Update</a>
-                                    <a href="/delete_post/{{post.id}}" class="btn btn-sm btn-success">Delete</a>
-                                {% endif %}
-                            </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title text-success fw-bold">{{post.post_title}}</h5>
+                            <p class="card-text">{{post.post_main|slice:':300'|safe}}... <a href="/post_detail/{{post.id}}">Read more</a></p>
+                            <p class="card-text"><small class="text-success">by {{post.author_f_name}} {{post.author_l_name}}</small></p>
+                            {% if user.is_authenticated %}
+                                <a href="/update_post/{{post.id}}" class="btn btn-sm btn-success">Update</a>
+                                <a href="/delete_post/{{post.id}}" class="btn btn-sm btn-success">Delete</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
-        {% endif %}
-        
+        </div>
         
     {% endfor %}
 </div>
