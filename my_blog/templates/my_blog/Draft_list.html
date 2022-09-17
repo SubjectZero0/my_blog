@@ -1,12 +1,62 @@
-<h1>List of drafted posts</h1>
 
-<ul>
+{% extends "my_blog/home.html" %}
+{% load static %}
 
-    {% for post in draft_list %}
 
-    <li>{{post.post_title}}</li>
-    
+
+{% block title %}
+<title>Review Drafts</title>
+{% endblock %}
+
+
+{% block content %}
+<div class="container text-center">
+    <h1 class="text-light"> Update and Publish draft posts</h1>
+
+
+</div>
+<div class="container mt-3 text-center">
+    <!--this loop will automatically render new drafts in the list in cards.
+
+    This template also utilizes the image the user provides in the creation (or update), and automatically provides the card image(thumbnail)
+
+    RISK----if user doesnt provide image, there will be an error when trying to render the template
+    POSSIBLE FIX-----  Make image input be demanded on creation and update-->
+
+    {% for draft in draft_list %}
+        <div class="d-flex flex-column align-items-center">
+            <div class="card mb-5 bg-dark text-light border" style="max-width: 85%;" >
+                <div class="row g-0">
+                    <div class="col-md-4 text-center">
+                        <img src="{{draft.post_image.url}}" class="img-fluid rounded-start p-2" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title text-success fw-bold">{{draft.post_title}}</h5>
+                            <p class="card-text">{{draft.post_main|slice:':300'|safe}}</a></p>
+                            <p class="card-text"><small class="text-success">by {{draft.author_f_name}} {{draft.author_l_name}}</small></p>
+                            <a href="/update_post/{{draft.id}}" class="btn btn-sm btn-success">Update</a>
+                            <a href="/delete_post/{{draft.id}}" class="btn btn-sm btn-success">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     {% endfor %}
+</div>
 
 
-</ul>
+
+
+
+
+
+
+><button onclick="topFunction()" class="btn btn-xs btn-success" id="myBtn" title="Go to top"><img src="{% static '\my_blog\images\up_arrow.png' %}"></button> 
+
+
+{% endblock %}
+<script src="{% static '/my_blog/extra.js' %}"></script>
+
+
