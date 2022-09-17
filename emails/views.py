@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import CreateView,TemplateView
+from .forms import ContactModelForm
+
 from .models import Subscriber, Contact
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
@@ -26,7 +28,8 @@ class SubscriberForm(CreateView):
 
 class ContactForm(CreateView):
     model = Contact
-    fields = ['f_name', 'l_name', 'email', 'feedback']
+    form_class = ContactModelForm
+    template_name = 'emails/Contact_form.html'
     success_url = reverse_lazy('emails:contact_thank_you')
 
 

@@ -33,10 +33,16 @@ body{
 #post_container{
     padding-left: 10%;
     padding-right: 15%;
-    
 }
 
-
+.container#contact_container{
+    padding-left: 15%;
+    padding-right: 15%;
+    background-color: #504753;
+    border: #504753;
+    -webkit-box-shadow: 5px 5px 5px 0px #504753, inset 4px 4px 15px 0px #504753, 5px 5px 7px 5px #504753; 
+    box-shadow: 5px 5px 5px 0px #504753, inset 4px 4px 15px 0px #504753, 5px 5px 7px 5px #504753;
+}
 
 
 

@@ -1,8 +1,28 @@
-<form method="post" action="">
+{% extends 'my_blog/home.html' %}
+{% load static %}
+{% block title %}
 
-    {% csrf_token %}
-    {{contact_form.as_p}}
+    <title>Contact US!</title>
+{% endblock %}
+{% block content %}
 
-    <input type="submit" value="Submit Feedback">
+<div class="container text-center text-light mb-5">
+    <h1>Write back to us, to let us know what you think!</h1>
+</div>
 
-</form>
+<div class="container" id="contact_container">
+    <form method="post" action="">
+        {% csrf_token %}
+        {% for field in contact_form %}
+            <div class = 'form-floating mb-3 mt-3'>
+                {{field}}
+                {{field.label_tag}}
+            </div>
+            {% endfor %}
+            <div class='text-center'>
+                <input type="submit" class="btn btn-success btn-lg" value="Submit Feedback">
+            </div>
+        </form>
+</div>
+{% endblock %}
+  
