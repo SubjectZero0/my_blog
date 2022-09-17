@@ -7,6 +7,13 @@ from django.forms import ModelForm
 
 
 class PostForm(ModelForm):
+
+    #make the post_image field required in posts and drafts.
+    #this way, there cant be an error from missing url
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['post_image'].required = True    
+    
     class Meta:
         model = Post
         fields = '__all__'
