@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'my_blog.apps.MyBlogConfig', #NON DEFAULT-MANUALLY REGISTERED APP
     'emails.apps.EmailsConfig', #NON DEFAULT-MANUALLY REGISTERED APP
     "ckeditor",
+    "captcha",
 ]
 
 MIDDLEWARE = [
