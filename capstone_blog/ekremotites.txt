@@ -10,6 +10,6 @@
 
 
 
-captcha
+
 
 continue as guest
