@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'my_blog.apps.MyBlogConfig', #NON DEFAULT-MANUALLY REGISTERED APP
     'emails.apps.EmailsConfig', #NON DEFAULT-MANUALLY REGISTERED APP
-    "ckeditor",
-    "captcha",
+    "ckeditor", #NON DEFAULT-MANUALLY REGISTERED APP
+    "captcha", #NON DEFAULT-MANUALLY REGISTERED APP
 ]
 
 MIDDLEWARE = [
