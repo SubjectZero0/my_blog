@@ -1,55 +1,53 @@
-<!--
-CHECK FOR ERRORS
+{% extends 'my_blog/home.html' %}
 
-CHECK IF USER IS AUTHENTICATED
-
-IF NOT
-    LOGIN
--->
+{% block title %}
+    <title>Login</title>
+{% endblock %}
 
 
-{% if form.errors %}
-    <p> Your Username and/or Password are incorrect. Please enter the correct Username and/or Password </p>
-{% endif %}
-
-{% if next %}
-
-    {% if user.is_authenticated %}
-
-        
-
-        <p> You are already logged in </p>
-
-
-    {% else %}
-
-          <!--User logged in but no access
-            user not logged in 
-            form -->
-
-        
-
-        {% if user.is_authenticated %}
-                <p>You don't have access the contents of this page</p>
-            {% else %}
-                <p>Please login to see drafts, or create a post</p>
-                
-        {% endif %}
-
+{% block content %}
+    {% if form.errors %} <!--Check for errors in username and password and show message -->
+        <div class="container text-center text-light mt-2">    
+            <p> Your Username and/or Password are incorrect. Please enter the correct Username and/or Password </p>
+        </div>
     {% endif %}
-{% endif %}
 
-<form method='post' action="{% url 'login' %}">
-    {% csrf_token %}
+    
+    {% if user.is_authenticated %}
+        {% if next %} <!--if user gets nexted check if they have permisions or not and if they are logged in and show message-->
+            <div class="container text-center text-light mt-5">
+                <p>You don't have access the contents of this page</p>
+            </div>
+        {% else %}
+            <div class="container text-center text-light mt-5">
+                <h1>You are already logged in </h1> 
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="container text-center mt-3">
+            <p class="text-light">Please login to see drafts, or create a post</p>
+            <form method='post' action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="text-light mb-1">
+                    {{form.username.label_tag}} 
+                </div>
 
-    {{form.username.label_tag}} {{form.username}}
-    {{form.password.label_tag}} {{form.password}}
+                <div class="mt-2 mb-2">
+                    {{form.username}}
+                </div>
 
+                <div class="text-light mb-1">
+                    {{form.password.label_tag}} 
+                </div>
+                
+                {{form.password}} <br> <br>
+                <input type="submit" class="btn btn-success" value="Login">
+                <input type="hidden" name="next">
+            </form>
+        </div>
+    {% endif %}
 
-    <input type="submit" value="Login">
-    <input type="hidden" name="next">
-</form>
-
+{% endblock %}
 
 
 
