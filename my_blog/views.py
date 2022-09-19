@@ -138,9 +138,8 @@ class DraftListView(LoginRequiredMixin,ListView):
 class SearchResultsView(ListView):
     model = Post
 
-    #we are going to render post list template but with the queries user applies
-    def get_template_names(self):
-        return ['my_blog/search_results.html']
+    #the search is going to return a page structured exactly as the Post_list.html
+    template_name = 'my_blog/Post_list.html'
 
     # this method is required for complex queries in the search bar. Notice, it only has to search posts, NOT drafts
     def get_queryset(self):
@@ -150,12 +149,20 @@ class SearchResultsView(ListView):
         )
         return object_list
 
+    #we can also return a brand new page by following the code bellow:
+    """
+    def get_template_names(self):
+        return ['my_blog/search_results.html']
+
     #context data is needed to be able to include the search terms in the template
     # for example when you want the page header to say: "Search results for "SEARCH TERM""
+    
     def get_context_data(self):
         context = super(SearchResultsView, self).get_context_data()
         context['query'] = self.request.GET.get('q') # the term 'q' refers to what is defined as a name in the corresponding html. its a GET request
         return context
+    
+    """
 
 #-----------------------------------------------------------------
 #-----------------------------------------------------------------
