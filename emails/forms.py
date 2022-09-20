@@ -1,12 +1,13 @@
-from ast import Sub
 from dataclasses import fields
 from django import forms
 from django.forms import ModelForm
 from .models import Contact, Subscriber
-from captcha.fields import CaptchaField,CaptchaAnswerInput
+from captcha.fields import CaptchaField
 
 class SubscriberForm(ModelForm):
+
     captcha = CaptchaField(label = '')
+
     class Meta:
         model = Subscriber
         fields = '__all__'
@@ -23,7 +24,6 @@ class SubscriberForm(ModelForm):
             'email' : forms.EmailInput(attrs={'class':'form-control',
                                                 'id':'floatingInput',
                                                 'placeholder':'Email Here'}),
-            'captcha' : forms.TextInput(attrs={'class':'form-control'})
         }
 
 
@@ -57,10 +57,6 @@ class ContactModelForm(ModelForm):
                                                 'id':'floatingTextarea',
                                                 'placeholder':'Write your feedback...',
                                                 'style':'height:30%;'})
-
-
-
-
         }
 
 

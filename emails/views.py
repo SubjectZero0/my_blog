@@ -2,29 +2,12 @@ from django.shortcuts import render
 from django.views.generic import CreateView,TemplateView
 from .forms import ContactModelForm
 
-from .models import Subscriber, Contact
+from .models import Contact
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.conf import settings
 
 # Create your views here.
-
-class SubscriberForm(CreateView):
-    model = Subscriber
-    fields = '__all__'
-    success_url = reverse_lazy('my_blog:home')
-
-
-    # this method allows for use of {{subscriber_form}} instead of {{form}} in html
-    def get_context_data(self, **kwargs):
-            context = super(SubscriberForm, self).get_context_data(**kwargs)
-            context["subscriber_form"]=context["form"]
-            return context
-    
-
-########################################################################
-########################################################################
-########################################################################
 
 class ContactForm(CreateView):
     model = Contact
