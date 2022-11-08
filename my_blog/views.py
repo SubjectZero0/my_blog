@@ -28,7 +28,7 @@ class HomeTemplateView(CreateView):
     model = Subscriber
     form_class = SubscriberForm
     success_url = reverse_lazy('my_blog:home')
-    
+
     #the template thats going to be used is the homepage template
     def get_template_names(self):
         return ['my_blog/home.html']
@@ -47,7 +47,7 @@ class HomeTemplateView(CreateView):
         instance_email = form.cleaned_data.get('email') #GET the instance email
         sbj = 'My blog Newsletter Subscription'
         msg = f'Thank you for subscribing {str.capitalize(instance_name)}. You are now going to get an email notifying you whenever there is a new post!'
-        
+
         #send the mail through this function
         send_mail(
             subject= sbj,
@@ -94,8 +94,8 @@ class DeletePost(LoginRequiredMixin, DeleteView):
     template_name = 'my_blog/delete_post_confirm.html'
     success_url = reverse_lazy('my_blog:post_list')
 
-######################################################################## 
-   
+########################################################################
+
 """We need the detail view to show form for comments and embed the form
 functionalities in the same template. NEED it to be a detailview, so we cant
 convert it to createview, like we did for the subscribers/home view."""
@@ -124,8 +124,8 @@ class DraftListView(LoginRequiredMixin,ListView):
     model = Post
     context_object_name = 'draft_list'
     queryset = Post.objects.filter(draft = True)
-    
-    #this method is required to be able to make the LIST VIEW choose 
+
+    #this method is required to be able to make the LIST VIEW choose
     #a template that has a different name than default, "model"_list.html
     def get_template_names(self):
         return ['my_blog/Draft_list.html']
@@ -144,6 +144,10 @@ class SearchResultsView(ListView):
     # this method is required for complex queries in the search bar. Notice, it only has to search posts, NOT drafts
     def get_queryset(self):
         query = self.request.GET.get("q")
+
+        if query is None:
+            query = ''
+
         object_list =  Post.objects.filter(
             Q(post_title__icontains=query) | Q(post_main__icontains=query) | Q(author_f_name__icontains=query) | Q(author_l_name__icontains=query), draft = False
         )
@@ -156,12 +160,12 @@ class SearchResultsView(ListView):
 
     #context data is needed to be able to include the search terms in the template
     # for example when you want the page header to say: "Search results for "SEARCH TERM""
-    
+
     def get_context_data(self):
         context = super(SearchResultsView, self).get_context_data()
         context['query'] = self.request.GET.get('q') # the term 'q' refers to what is defined as a name in the corresponding html. its a GET request
         return context
-    
+
     """
 
 #-----------------------------------------------------------------
@@ -172,7 +176,7 @@ class SearchResultsView(ListView):
 
 """After we rendered the form in the detailview, create a Formview.
 FormView is important to specify which template to use,
-the fact that its a POST request(IMPORTANT), and that it makes use of 
+the fact that its a POST request(IMPORTANT), and that it makes use of
 SingleObjectMixin(IMPORTANT)"""
 
 class CommentCreate(SingleObjectMixin, FormView):
@@ -188,7 +192,7 @@ class CommentCreate(SingleObjectMixin, FormView):
 
 """this is where the magic happens. this is the dual view we planned for.
 this view tells us that on a GET request, render the detailview(which renders the form and the blog post).
-On POST request (i.e. after form completion and submition), 
+On POST request (i.e. after form completion and submition),
 give the post id its corresponding pk(IMPORTANT), SAVE and use the success url
 from the above form(i.e. http://host/post_detail/8/#) """
 
@@ -205,10 +209,10 @@ class PostView(View):
         if form.is_valid():
             form.save()
         return view(request, *args, **kwargs)
-    
 
-"""THIS (PostView) view we want to use in our urls.py in place of 
-the simple detailview. 
+
+"""THIS (PostView) view we want to use in our urls.py in place of
+the simple detailview.
 this way we have both rendering and form functionality"""
 
 
